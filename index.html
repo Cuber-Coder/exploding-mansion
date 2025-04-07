@@ -1,142 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Exploding Mansion</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: start;
-      min-height: 100vh;
-      padding: 30px 15px;
-    }
-
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5em;
-      margin-bottom: 20px;
-    }
-
-    #menu, #game {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    }
-
-    button {
-      padding: 12px 20px;
-      margin: 10px 5px;
-      font-size: 1rem;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
-      color: white;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    input {
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 1rem;
-      width: 100%;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-    }
-
-    #game {
-      display: none;
-      flex-direction: column;
-    }
-
-    #tiles {
-      display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      gap: 5px;
-      margin-top: 20px;
-    }
-
-    .tile {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 5px;
-      aspect-ratio: 1;
-      text-align: center;
-      line-height: 35px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .tile:hover {
-      background: rgba(255, 255, 255, 0.4);
-    }
-
-    .tile.active {
-      background: limegreen;
-    }
-
-    .tile.bomb {
-      background: crimson;
-    }
-
-    .tile.key {
-      background: gold;
-    }
-
-    .tile.defuser {
-      background: dodgerblue;
-    }
-
-    .tile.escaped {
-      background: #6dfcb8;
-    }
-
-    #status, #timer {
-      margin-top: 20px;
-      font-weight: bold;
-    }
-
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>💣 Exploding Mansion</h1>
-
-  <div id="menu">
-    <input type="text" id="roomCode" placeholder="Enter Room Code">
-    <button onclick="createRoom()">Create Room</button>
-    <button onclick="joinRoom()">Join Room</button>
-    <p id="menuStatus"></p>
-  </div>
-
   <div id="game">
-    <p id="roleDisplay">You are: <strong id="role">Player</strong></p>
-    <p id="status">Status: Waiting...</p>
-    <p id="timer">⏱️ Timer: <span id="timeLeft">90</span>s</p>
-    <div id="tiles"></div>
+    <h1>💣 Exploding Mansion 💣</h1>
+    <audio id="doorSound" src="sounds/door.mp3" preload="auto"></audio>
+
+    <div id="phase1">
+      <p><strong>Player 1:</strong> Choose where to hide the bomb, key, and defuser.</p>
+      <label for="bombRoom">Bomb Room:</label>
+      <select id="bombRoom"></select><br><br>
+
+      <label for="keyRoom">Key Room:</label>
+      <select id="keyRoom"></select><br><br>
+
+      <label for="defuserRoom">Defuser Room (optional):</label>
+      <select id="defuserRoom"></select><br><br>
+
+      <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <div id="phase2" style="display: none;">
+      <p id="roomDescription"></p>
+      <div id="actions"></div>
+      <p id="status"></p>
+    </div>
   </div>
 
   <script src="script.js"></script>
-  <script src="client.js"></script>
 </body>
 </html>
